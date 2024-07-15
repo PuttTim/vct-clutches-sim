@@ -1,11 +1,7 @@
 interface Team {
     name: string
     odds: number
-}
-
-// extend Team to add a scoreline property
-interface TeamWithScore extends Team {
-    score: number
+    score?: number
 }
 
 const simulateMapWinner = (teamAOdds: number, teamBOdds: number) => {
@@ -24,17 +20,20 @@ const simulateBestOf = (teamA: Team, teamB: Team, bestOf: number) => {
     let teamAWins = 0
     let teamBWins = 0
 
-    for (let i = 0; i < bestOf; i++) {
+    do {
         const result = simulateMapWinner(teamA.odds, teamB.odds)
 
         result === "teamA" ? teamAWins++ : teamBWins++
+    } while (
+        teamAWins < (bestOf - 1) / 2 + 1 &&
+        teamBWins < (bestOf - 1) / 2 + 1
+    )
+
+    const winnerResult = {
+        teamA: { ...teamA, score: teamAWins },
+        teamB: { ...teamB, score: teamBWins },
+        winner: teamAWins > teamBWins ? teamA.name : teamB.name,
     }
-
-    const winnerResult: TeamWithScore =
-        teamAWins > teamBWins
-            ? { ...teamA, score: teamAWins }
-            : { ...teamB, score: teamBWins }
-
     return winnerResult
 }
 
