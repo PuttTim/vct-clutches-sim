@@ -42,18 +42,14 @@ const GroupStage = (props: IGroupStageProps) => {
     }, [])
 
     return (
-        <>
-            <h1>Group Stage</h1>
-
-            <h2>Matchups</h2>
-
+        <div className="flex flex-wrap flex-shrink gap-8">
             {matchups.map((matchup, i) => {
                 const [teams] = Object.keys(matchup)
                 const { teamA, teamB } = matchup[teams]
 
                 return (
                     <div key={i} className="">
-                        <h3>{teams}</h3>
+                        <h3 className="text-xl font-bold">{teams}</h3>
                         <p>
                             {teamA.score > teamB.score
                                 ? `${teamA.name} wins ${teamA.score}-${teamB.score}`
@@ -62,7 +58,7 @@ const GroupStage = (props: IGroupStageProps) => {
                     </div>
                 )
             })}
-        </>
+        </div>
     )
 }
 
